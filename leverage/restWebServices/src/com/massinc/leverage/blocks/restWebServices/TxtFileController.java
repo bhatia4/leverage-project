@@ -1,15 +1,12 @@
 package com.massinc.leverage.blocks.restWebServices;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.massinc.leverage.blocks.txtFileProperties.TxtFilePropertiesSingleton;
+import com.massinc.leverage.blocks.txtFileProperties.TxtFileProperties;
+import com.massinc.leverage.blocks.txtFileProperties.TxtFilePropertiesInputParameter;
 
 @RestController
 @RequestMapping("/txtProperty")
@@ -18,16 +15,9 @@ public class TxtFileController {
 	@RequestMapping(value = "/{name}", method = RequestMethod.GET)
 	public @ResponseBody String getPropertyValue(@PathVariable String name) {
 		String val = null;
-		try {
-			TxtFilePropertiesSingleton txtFilePropertiesSingleton = TxtFilePropertiesSingleton.getInstance();
-			val = txtFilePropertiesSingleton.getProperties().getProperty(name);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		TxtFilePropertiesInputParameter param = new TxtFilePropertiesInputParameter();
+		param.setPropertyKey(name);
+		val = (String) new TxtFileProperties().getData(param);
 		
 		if (val != null)
 			return new StringBuilder(name).append(" = '").append(val).append("'").toString();

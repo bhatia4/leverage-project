@@ -4,13 +4,13 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
-public class TxtFilePropertiesSingleton {
+class TxtFilePropertiesSingleton {
 	
 	private static TxtFilePropertiesSingleton txtFilePropertiesSingleton;
 	private TxtFilePropertiesSingleton()
 	{}
 	
-	public static TxtFilePropertiesSingleton getInstance() throws FileNotFoundException, IOException
+	protected static TxtFilePropertiesSingleton getInstance() throws FileNotFoundException, IOException
 	{
 		if (txtFilePropertiesSingleton==null)
 		{
